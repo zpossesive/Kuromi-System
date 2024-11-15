@@ -35,7 +35,7 @@ Replace your-discord-bot-token-here with your bot's actual token and your-discor
 
 To obtain your bot's token and client ID:
 
-Go to the Discord Developer Portal.
+Go to the [Discord Developer Portal.](https://discord.com/developers)
 Select your bot application.
 Under Bot, you will find your token. Click Copy to copy the token.
 Under General Information, you will find your Client ID.
