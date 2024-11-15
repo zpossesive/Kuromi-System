@@ -19,7 +19,10 @@ module.exports = {
                 { name: '/idban', value: 'Bans a user, including if they are not in the server.', inline: true },
                 { name: '/purge', value: 'Deletes a specified amount of messages in the channel.', inline: true },
                 { name: '/serverinfo', value: 'Displays information about the server.', inline: true },
-                { name: '/userinfo', value: 'Displays information about a user.', inline: true }
+                { name: '/userinfo', value: 'Displays information about a user.', inline: true },
+                { name: '/ping', value: 'Pings the bot and shows its latency.', inline: true },
+                { name: '/avatar', value: 'Displays the avatar of a user.', inline: true },
+                { name: '/banner', value: 'Displays the banner of a user.', inline: true }
 
 
             )
