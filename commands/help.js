@@ -22,7 +22,9 @@ module.exports = {
                 { name: '/userinfo', value: 'Displays information about a user.', inline: true },
                 { name: '/ping', value: 'Pings the bot and shows its latency.', inline: true },
                 { name: '/avatar', value: 'Displays the avatar of a user.', inline: true },
-                { name: '/banner', value: 'Displays the banner of a user.', inline: true }
+                { name: '/banner', value: 'Displays the banner of a user.', inline: true },
+                { name: '/invite', value: 'Displays the invite link for the bot.', inline: true },
+                { name: '/uptime', value: 'Displays the uptime of the bot.', inline: true }
 
 
             )
