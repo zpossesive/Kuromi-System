@@ -21,7 +21,7 @@ module.exports = {
         ),
     async execute(interaction) {
         const target = interaction.options.getUser('target');
-        const duration = interaction.options.getString('duration');
+        const duration = interaction.options.getString('duration').toLowerCase();
         const reason = interaction.options.getString('reason') || 'No reason provided';
         const member = interaction.guild.members.cache.get(target.id);
 
@@ -64,10 +64,10 @@ module.exports = {
         while ((match = durationRegex.exec(duration)) !== null) {
             const value = parseInt(match[1]);
             const unit = match[2];
-            if (unit === 'D') durationMs += value * 24 * 60 * 60 * 1000; 
-            if (unit === 'H') durationMs += value * 60 * 60 * 1000; 
-            if (unit === 'M') durationMs += value * 60 * 1000; 
-            if (unit === 'S') durationMs += value * 1000;
+            if (unit === 'd') durationMs += value * 24 * 60 * 60 * 1000; 
+            if (unit === 'h') durationMs += value * 60 * 60 * 1000; 
+            if (unit === 'm') durationMs += value * 60 * 1000; 
+            if (unit === 's') durationMs += value * 1000;
         }
 
         console.log(`Mute Duration in ms: ${durationMs}`); 
