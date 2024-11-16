@@ -11,7 +11,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor('#0099FF')
             .setTitle(`${guild.name} Server Info`)
-            .setThumbnail(guild.iconURL())  // Server's icon
+            .setThumbnail(guild.iconURL())
             .addFields(
                 { name: 'Server Name', value: guild.name, inline: true },
                 { name: 'Server Owner', value: `<@${guild.ownerId}>`, inline: true },
