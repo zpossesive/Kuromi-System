@@ -11,7 +11,7 @@ module.exports = {
         )
         .addStringOption(option =>
             option.setName('duration')
-                .setDescription('Duration of the mute in D/H/M/S format')
+                .setDescription('Duration of the mute in d/h/m/s format')
                 .setRequired(true)
         )
         .addStringOption(option =>
