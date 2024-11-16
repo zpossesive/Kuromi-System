@@ -57,7 +57,7 @@ module.exports = {
 
         await member.roles.add(mutedRole, reason);
 
-        const durationRegex = /(\d+)([DHMS])/g;
+        const durationRegex = /(\d+)([dhms])/g;
         let durationMs = 0;
         let match;
 
