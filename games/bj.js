@@ -92,7 +92,7 @@ module.exports = {
                 if (playerValue > 21) {
                     const bustEmbed = createEmbed(true)
                         .setColor('#FF0000')
-                        .setDescription('💥 You busted! Better luck next time.')
+                        .setDescription('You busted! Better luck next time.')
                         .setFooter({ text: 'Game Over!' });
                     await buttonInteraction.update({ embeds: [bustEmbed], components: [] });
                     collector.stop();
