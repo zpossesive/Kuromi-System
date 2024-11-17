@@ -43,6 +43,9 @@ for (const file of commandFiles) {
 const moderationPath = path.join(__dirname, 'moderation');
 const moderationFiles = fs.readdirSync(moderationPath).filter(file => file.endsWith('.js'));
 
+
+
+
 for (const file of moderationFiles) {
     try {
         const command = require(path.join(moderationPath, file));
@@ -59,6 +62,47 @@ for (const file of moderationFiles) {
         console.error(`Error loading moderation command ${file}:`, error);
     }
 }
+
+
+
+
+
+const gamespath = path.join(__dirname, 'games');
+const gamesfile = fs.readdirSync(moderationPath).filter(file => file.endsWith('.js'));
+
+
+
+
+for (const file of gamesfile) {
+    try {
+        const command = require(path.join(gamespath, file));
+
+        console.log(`Loaded moderation command: ${command.data ? command.data.name : 'Unknown name'} from ${file}`);
+
+        if (command.data && command.data.name) {
+            client.commands.set(command.data.name, command);
+            commands.push(command.data.toJSON());
+        } else {
+            console.error(`Invalid command structure in ${file}: Missing 'data' or 'name'`);
+        }
+    } catch (error) {
+        console.error(`Error loading moderation command ${file}:`, error);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 

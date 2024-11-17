@@ -24,7 +24,9 @@ module.exports = {
                 { name: '/avatar', value: 'Displays the avatar of a user.', inline: true },
                 { name: '/banner', value: 'Displays the banner of a user.', inline: true },
                 { name: '/invite', value: 'Displays the invite link for the bot.', inline: true },
-                { name: '/uptime', value: 'Displays the uptime of the bot.', inline: true }
+                { name: '/uptime', value: 'Displays the uptime of the bot.', inline: true },
+                { name: '/ghelp', value: 'Displays the games help menu.', inline: true }
+            
 
 
             )
