@@ -18,7 +18,7 @@ module.exports = {
         }
 
         const embed = new EmbedBuilder()
-            .setColor(result === "You won!" ? 'GREEN' : 'RED')
+            .setColor(result === "You won!" ? '008000' : 'FF0000')
             .setTitle('Slot Machine')
             .setDescription(`**Spin Result**:\n\n${slot1} ${slot2} ${slot3}\n\n${result}`)
             .setTimestamp();
