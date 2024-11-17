@@ -10,20 +10,18 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setColor('#00FFFF')
-            .setTitle('🎰 Slot Machine 🎰')
-            .setDescription(`**Spinning...**\n\n🎰 ${symbols[0]} | ${symbols[0]} | ${symbols[0]} 🎰`)
+            .setTitle('Slot Machine')
+            .setDescription(`**Spinning...**\n\n${symbols[0]} | ${symbols[0]} | ${symbols[0]} `)
             .setTimestamp()
             .setFooter({ text: 'Good Luck!' });
 
-        // Send the initial message without any buttons
         const message = await interaction.reply({
             embeds: [embed],
             fetchReply: true,
         });
 
-        let spins = 5; // Set to 5 seconds for spin time
+        let spins = 5; 
 
-        // Function to handle the spin animation
         const startSpin = async () => {
             let intervalId = setInterval(async () => {
                 const slot1 = symbols[Math.floor(Math.random() * symbols.length)];
@@ -38,7 +36,6 @@ module.exports = {
                 if (spins === 0) {
                     clearInterval(intervalId);
 
-                    // Final result after 5 seconds of spinning
                     const finalSlot1 = symbols[Math.floor(Math.random() * symbols.length)];
                     const finalSlot2 = symbols[Math.floor(Math.random() * symbols.length)];
                     const finalSlot3 = symbols[Math.floor(Math.random() * symbols.length)];
@@ -52,15 +49,13 @@ module.exports = {
                         .setTitle('🎰 Slot Machine 🎰')
                         .setDescription(`**Final Result**:\n\n🎰 ${finalSlot1} | ${finalSlot2} | ${finalSlot3} 🎰\n\n${result}`)
                         .setTimestamp()
-                        .setFooter({ text: result === "You won! 🎉" ? 'Congratulations!' : 'Better Luck Next Time!' });
+                        .setFooter({ text: result === "You won!" ? 'Congratulations!' : 'womp womp >.<' });
 
-                    // Update the message without a button (since no spin again is needed)
                     await message.edit({ embeds: [embed] });
                 }
-            }, 500); // Spins every 500ms (slower spin animation)
+            }, 500); 
         };
 
-        // Start the initial spin animation
         startSpin();
     },
 };
