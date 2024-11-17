@@ -3,14 +3,20 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Butt
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('blackjack')
-        .setDescription('Play a game of Blackjack.'),
+        .setDescription('Play a visually enhanced Blackjack game.'),
 
     async execute(interaction) {
-        const suits = ['♠', '♥', '♦', '♣'];
+        const suits = {
+            '♠': 'Spades',
+            '♥': 'Hearts',
+            '♦': 'Diamonds',
+            '♣': 'Clubs',
+        };
+
         const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
         const drawCard = () => {
-            const suit = suits[Math.floor(Math.random() * suits.length)];
+            const suit = Object.keys(suits)[Math.floor(Math.random() * 4)];
             const value = values[Math.floor(Math.random() * values.length)];
             return { suit, value };
         };
@@ -38,8 +44,16 @@ module.exports = {
             return value;
         };
 
+        const createVisualHand = (hand) => {
+            return hand.map(card => {
+                const cardSymbol = `**${card.value}**${card.suit}`;
+                return cardSymbol;
+            }).join(' ');
+        };
+
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+        // Game Initialization
         let playerHand = [drawCard(), drawCard()];
         let botHand = [drawCard(), drawCard()];
         let playerValue = calculateHandValue(playerHand);
@@ -48,14 +62,14 @@ module.exports = {
         const createEmbed = (revealBot = false) => {
             return new EmbedBuilder()
                 .setColor('#0099FF')
-                .setTitle('Blackjack Game')
+                .setTitle('🎴 Blackjack Game 🎴')
                 .setDescription('React with the buttons below to continue.')
                 .addFields(
-                    { name: 'Your Hand', value: playerHand.map(card => `${card.value}${card.suit}`).join(' '), inline: true },
+                    { name: 'Your Hand', value: createVisualHand(playerHand), inline: true },
                     { name: 'Your Total', value: `${playerValue}`, inline: true },
                     { name: 'Bot\'s Hand', value: revealBot
-                        ? botHand.map(card => `${card.value}${card.suit}`).join(' ')
-                        : `${botHand[0].value}${botHand[0].suit} ?`, inline: true },
+                        ? createVisualHand(botHand)
+                        : `${createVisualHand([botHand[0]])} **?**`, inline: true },
                     { name: 'Bot\'s Total', value: revealBot ? `${botValue}` : '??', inline: false }
                 )
                 .setTimestamp();
@@ -90,7 +104,7 @@ module.exports = {
                 if (playerValue > 21) {
                     const bustEmbed = createEmbed(true)
                         .setColor('#FF0000')
-                        .setDescription('You busted! Better luck next time.')
+                        .setDescription('💥 You busted! Better luck next time.')
                         .setFooter({ text: 'Game Over!' });
                     await buttonInteraction.update({ embeds: [bustEmbed], components: [] });
                     collector.stop();
@@ -102,19 +116,20 @@ module.exports = {
             }
 
             if (buttonInteraction.customId === 'stand') {
+                // Bot's turn
                 while (botValue < 17) {
-                    await delay(1000); 
+                    await delay(1000); // Animation delay
                     botHand.push(drawCard());
                     botValue = calculateHandValue(botHand);
                 }
 
                 let result;
                 if (botValue > 21 || playerValue > botValue) {
-                    result = 'You win!';
+                    result = '🎉 You win!';
                 } else if (playerValue < botValue) {
-                    result = 'You lose!';
+                    result = '😢 You lose!';
                 } else {
-                    result = 'It\'s a tie!';
+                    result = '🤝 It\'s a tie!';
                 }
 
                 const finalEmbed = createEmbed(true)
@@ -131,7 +146,7 @@ module.exports = {
             if (!collector.ended) {
                 const timeoutEmbed = createEmbed(true)
                     .setColor('#FF9900')
-                    .setDescription('The game ended due to inactivity.');
+                    .setDescription('⌛ The game ended due to inactivity.');
                 await interaction.editReply({ embeds: [timeoutEmbed], components: [] });
             }
         });
