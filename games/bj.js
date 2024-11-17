@@ -50,12 +50,12 @@ module.exports = {
         const createEmbed = (revealBot = false) => {
             return new EmbedBuilder()
                 .setColor('#0099FF')
-                .setTitle('🎴 Blackjack Game 🎴')
+                .setTitle('Blackjack Game')
                 .setDescription('React with the buttons below to play.')
                 .addFields(
                     { name: 'Your Hand', value: `\`\`\`${createHandVisual(playerHand)}\`\`\``, inline: false },
                     { name: 'Your Total', value: `${playerValue}`, inline: true },
-                    { name: 'Bot\'s Hand', value: revealBot
+                    { name: 'Dealer\'s Hand', value: revealBot
                         ? `\`\`\`${createHandVisual(botHand)}\`\`\``
                         : `\`\`\`${createHandVisual([botHand[0]])}  [ ? ]\`\`\``, inline: false },
                     { name: 'Bot\'s Total', value: revealBot ? `${botValue}` : '???', inline: true }
@@ -112,11 +112,11 @@ module.exports = {
 
                 let result;
                 if (botValue > 21 || playerValue > botValue) {
-                    result = '🎉 You win!';
+                    result = 'You win!';
                 } else if (playerValue < botValue) {
-                    result = '😢 You lose!';
+                    result = 'You lose!';
                 } else {
-                    result = '🤝 It\'s a tie!';
+                    result = 'It\'s a tie!';
                 }
 
                 const finalEmbed = createEmbed(true)
