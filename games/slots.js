@@ -29,9 +29,9 @@ module.exports = {
             fetchReply: true,
         });
 
-        let spins = 10;
+        let spins = 5; // Set to 5 seconds for spin time
 
-        // Start the spin animation
+        // Start the spin animation with slower interval
         let intervalId = setInterval(async () => {
             const slot1 = symbols[Math.floor(Math.random() * symbols.length)];
             const slot2 = symbols[Math.floor(Math.random() * symbols.length)];
@@ -45,6 +45,7 @@ module.exports = {
             if (spins === 0) {
                 clearInterval(intervalId);
 
+                // Final result after 5 seconds of spinning
                 const finalSlot1 = symbols[Math.floor(Math.random() * symbols.length)];
                 const finalSlot2 = symbols[Math.floor(Math.random() * symbols.length)];
                 const finalSlot3 = symbols[Math.floor(Math.random() * symbols.length)];
@@ -70,7 +71,7 @@ module.exports = {
                 // Update the message with the final result and re-enable the button
                 await message.edit({ embeds: [embed], components: [spinButton] });
             }
-        }, 100); // Spins every 100ms
+        }, 300); // Spins every 300ms (slower spin animation)
 
         // Button interaction collector
         const collector = message.createMessageComponentCollector({
@@ -90,7 +91,7 @@ module.exports = {
                 embed.setDescription(`**Spinning...**\n\n${symbols[0]} ${symbols[0]} ${symbols[0]}`);
                 await message.edit({ embeds: [embed] });
 
-                spins = 10; // Reset the spin count
+                spins = 5; // Reset the spin time to 5 seconds
 
                 intervalId = setInterval(async () => {
                     const slot1 = symbols[Math.floor(Math.random() * symbols.length)];
@@ -122,7 +123,7 @@ module.exports = {
                         spinButton.components[0].setDisabled(false);
                         await message.edit({ embeds: [embed], components: [spinButton] });
                     }
-                }, 100);
+                }, 300); // Spins every 300ms (slower spin animation)
             }
         });
 
