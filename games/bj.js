@@ -3,16 +3,14 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Butt
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('blackjack')
-        .setDescription('Play a visually modern Blackjack game.'),
+        .setDescription('Play a simplified Blackjack game.'),
 
     async execute(interaction) {
-        const suits = ['♠', '♥', '♦', '♣'];
         const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
         const drawCard = () => {
-            const suit = suits[Math.floor(Math.random() * suits.length)];
             const value = values[Math.floor(Math.random() * values.length)];
-            return { suit, value };
+            return { value };
         };
 
         const calculateHandValue = (hand) => {
@@ -38,23 +36,12 @@ module.exports = {
             return value;
         };
 
-        const createCardFrame = (card) => {
-            const color = (card.suit === '♥' || card.suit === '♦') ? '🔴' : '⚫';
-            return `┌─────────┐\n│ ${color}       │\n│   ${card.value.padEnd(2, ' ')}    │\n│       ${card.suit} │\n└─────────┘`;
-        };
-
         const createHandVisual = (hand) => {
-            const frames = hand.map(createCardFrame);
-            const combined = frames.map(frame => frame.split('\n'));
-            const rows = Array.from({ length: 4 }, (_, i) =>
-                combined.map(lines => lines[i]).join('   ')
-            );
-            return rows.join('\n');
+            return hand.map(card => `[ ${card.value} ]`).join('  ');
         };
 
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-        // Game Initialization
         let playerHand = [drawCard(), drawCard()];
         let botHand = [drawCard(), drawCard()];
         let playerValue = calculateHandValue(playerHand);
@@ -70,7 +57,7 @@ module.exports = {
                     { name: 'Your Total', value: `${playerValue}`, inline: true },
                     { name: 'Bot\'s Hand', value: revealBot
                         ? `\`\`\`${createHandVisual(botHand)}\`\`\``
-                        : `\`\`\`${createHandVisual([botHand[0]])}   ???\`\`\``, inline: false },
+                        : `\`\`\`${createHandVisual([botHand[0]])}  [ ? ]\`\`\``, inline: false },
                     { name: 'Bot\'s Total', value: revealBot ? `${botValue}` : '???', inline: true }
                 )
                 .setTimestamp();
@@ -117,9 +104,8 @@ module.exports = {
             }
 
             if (buttonInteraction.customId === 'stand') {
-                // Bot's turn
                 while (botValue < 17) {
-                    await delay(1000); // Animation delay
+                    await delay(1000);
                     botHand.push(drawCard());
                     botValue = calculateHandValue(botHand);
                 }
