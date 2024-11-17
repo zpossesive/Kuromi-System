@@ -68,7 +68,7 @@ for (const file of moderationFiles) {
 
 
 const gamespath = path.join(__dirname, 'games');
-const gamesfile = fs.readdirSync(moderationPath).filter(file => file.endsWith('.js'));
+const gamesfile = fs.readdirSync(gamespath).filter(file => file.endsWith('.js'));
 
 
 
