@@ -28,7 +28,7 @@ module.exports = {
                 const slot2 = symbols[Math.floor(Math.random() * symbols.length)];
                 const slot3 = symbols[Math.floor(Math.random() * symbols.length)];
 
-                embed.setDescription(`**Spinning...**\n\n🎰 ${slot1} | ${slot2} | ${slot3} 🎰`);
+                embed.setDescription(`**Spinning...**\n\n${slot1} | ${slot2} | ${slot3} `);
                 await message.edit({ embeds: [embed] });
 
                 spins--;
@@ -40,14 +40,14 @@ module.exports = {
                     const finalSlot2 = symbols[Math.floor(Math.random() * symbols.length)];
                     const finalSlot3 = symbols[Math.floor(Math.random() * symbols.length)];
 
-                    let result = "You lost! 😢";
+                    let result = "Womp Womp";
                     if (finalSlot1 === finalSlot2 && finalSlot2 === finalSlot3) {
-                        result = "You won! 🎉";
+                        result = "You won!";
                     }
 
                     embed.setColor('#FFD700')
-                        .setTitle('🎰 Slot Machine 🎰')
-                        .setDescription(`**Final Result**:\n\n🎰 ${finalSlot1} | ${finalSlot2} | ${finalSlot3} 🎰\n\n${result}`)
+                        .setTitle('Slot Machine ')
+                        .setDescription(`**Final Result**:\n\n${finalSlot1} | ${finalSlot2} | ${finalSlot3} \n\n${result}`)
                         .setTimestamp()
                         .setFooter({ text: result === "You won!" ? 'Congratulations!' : 'womp womp >.<' });
 
