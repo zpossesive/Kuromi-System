@@ -32,7 +32,7 @@ module.exports = {
             )
             .setFooter({
                 text: 'Use "/" to access commands.',
-                iconURL: 'https://media.discordapp.net/attachments/1259596953637879828/1305930729880027156/KGR_ICON.png?ex=67381e05&is=6736cc85&hm=3fed07920f422a5fd0060034cc1fa8de38c2eee7762d446e414fbcef092da652&=&format=webp&quality=lossless&width=838&height=838',
+                iconURL: 'https://i.pinimg.com/736x/0d/96/96/0d96960fa53999c318d2439afc4d68d9.jpg',
             })
             .setTimestamp();
 
