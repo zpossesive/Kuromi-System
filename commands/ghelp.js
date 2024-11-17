@@ -11,7 +11,8 @@ module.exports = {
             .setDescription('Here are the commands you can use:')
             .addFields(
                 { name: '/ghelp', value: 'Displays this help menu.', inline: true },
-                { name: '/blackjack', value: 'A small Blackjack game.', inline: true}
+                { name: '/blackjack', value: 'A small Blackjack game.', inline: true},
+                { name: '/slots', value: 'A mini Slots game.', inline: true}
 
                 
 
