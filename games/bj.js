@@ -3,20 +3,14 @@ const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, Butt
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('blackjack')
-        .setDescription('Play a visually enhanced Blackjack game.'),
+        .setDescription('Play a visually modern Blackjack game.'),
 
     async execute(interaction) {
-        const suits = {
-            '♠': 'Spades',
-            '♥': 'Hearts',
-            '♦': 'Diamonds',
-            '♣': 'Clubs',
-        };
-
+        const suits = ['♠', '♥', '♦', '♣'];
         const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
         const drawCard = () => {
-            const suit = Object.keys(suits)[Math.floor(Math.random() * 4)];
+            const suit = suits[Math.floor(Math.random() * suits.length)];
             const value = values[Math.floor(Math.random() * values.length)];
             return { suit, value };
         };
@@ -44,11 +38,18 @@ module.exports = {
             return value;
         };
 
-        const createVisualHand = (hand) => {
-            return hand.map(card => {
-                const cardSymbol = `**${card.value}**${card.suit}`;
-                return cardSymbol;
-            }).join(' ');
+        const createCardFrame = (card) => {
+            const color = (card.suit === '♥' || card.suit === '♦') ? '🔴' : '⚫';
+            return `┌─────────┐\n│ ${color}       │\n│   ${card.value.padEnd(2, ' ')}    │\n│       ${card.suit} │\n└─────────┘`;
+        };
+
+        const createHandVisual = (hand) => {
+            const frames = hand.map(createCardFrame);
+            const combined = frames.map(frame => frame.split('\n'));
+            const rows = Array.from({ length: 4 }, (_, i) =>
+                combined.map(lines => lines[i]).join('   ')
+            );
+            return rows.join('\n');
         };
 
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -63,14 +64,14 @@ module.exports = {
             return new EmbedBuilder()
                 .setColor('#0099FF')
                 .setTitle('🎴 Blackjack Game 🎴')
-                .setDescription('React with the buttons below to continue.')
+                .setDescription('React with the buttons below to play.')
                 .addFields(
-                    { name: 'Your Hand', value: createVisualHand(playerHand), inline: true },
+                    { name: 'Your Hand', value: `\`\`\`${createHandVisual(playerHand)}\`\`\``, inline: false },
                     { name: 'Your Total', value: `${playerValue}`, inline: true },
                     { name: 'Bot\'s Hand', value: revealBot
-                        ? createVisualHand(botHand)
-                        : `${createVisualHand([botHand[0]])} **?**`, inline: true },
-                    { name: 'Bot\'s Total', value: revealBot ? `${botValue}` : '??', inline: false }
+                        ? `\`\`\`${createHandVisual(botHand)}\`\`\``
+                        : `\`\`\`${createHandVisual([botHand[0]])}   ???\`\`\``, inline: false },
+                    { name: 'Bot\'s Total', value: revealBot ? `${botValue}` : '???', inline: true }
                 )
                 .setTimestamp();
         };
