@@ -1,4 +1,4 @@
-const { SlashCommandBuilder, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,18 +15,9 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: 'Good Luck!' });
 
-        const spinButton = new ActionRowBuilder().addComponents(
-            new ButtonBuilder()
-                .setCustomId('spin_again')
-                .setLabel('Spin Again!')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true) // Initially disable the button
-        );
-
-        // Send the initial message with the button
+        // Send the initial message without any buttons
         const message = await interaction.reply({
             embeds: [embed],
-            components: [spinButton],
             fetchReply: true,
         });
 
@@ -63,45 +54,13 @@ module.exports = {
                         .setTimestamp()
                         .setFooter({ text: result === "You won! 🎉" ? 'Congratulations!' : 'Better Luck Next Time!' });
 
-                    // Re-enable the button to allow the user to play again
-                    spinButton.components[0].setDisabled(false); // Re-enable the button
-                    await message.edit({ embeds: [embed], components: [spinButton] });
+                    // Update the message without a button (since no spin again is needed)
+                    await message.edit({ embeds: [embed] });
                 }
             }, 500); // Spins every 500ms (slower spin animation)
         };
 
         // Start the initial spin animation
         startSpin();
-
-        // Button interaction collector
-        const collector = message.createMessageComponentCollector({
-            componentType: 'BUTTON',
-            time: 15000, // Allow user to interact for 15 seconds
-        });
-
-        collector.on('collect', async (buttonInteraction) => {
-            if (buttonInteraction.customId === 'spin_again') {
-                await buttonInteraction.deferUpdate();
-
-                // Disable the button while spinning again
-                spinButton.components[0].setDisabled(true);
-                await message.edit({ components: [spinButton] });
-
-                // Reset the spin time and start the spin again
-                spins = 5; // Reset the spin time to 5 seconds
-                embed.setDescription(`**Spinning...**\n\n🎰 ${symbols[0]} | ${symbols[0]} | ${symbols[0]} 🎰`);
-                await message.edit({ embeds: [embed] });
-
-                // Restart the spin animation
-                startSpin();
-            }
-        });
-
-        collector.on('end', async () => {
-            await message.edit({
-                components: [],
-                embeds: [embed.setDescription('The game has ended. Please start again!')],
-            });
-        });
     },
 };
