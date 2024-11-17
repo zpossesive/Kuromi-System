@@ -2,7 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('slot')
+        .setName('slots')
         .setDescription('Play a fun slot machine game!'),
 
     async execute(interaction) {
