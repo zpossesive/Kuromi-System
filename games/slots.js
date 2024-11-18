@@ -20,13 +20,20 @@ module.exports = {
             fetchReply: true,
         });
 
-        let spins = 5; 
+        let spins = 5;
 
         const startSpin = async () => {
             let intervalId = setInterval(async () => {
-                const slot1 = symbols[Math.floor(Math.random() * symbols.length)];
-                const slot2 = symbols[Math.floor(Math.random() * symbols.length)];
-                const slot3 = symbols[Math.floor(Math.random() * symbols.length)];
+                let slot1, slot2, slot3;
+                const isWin = Math.random() < 0.1;
+
+                if (isWin) {
+                    slot1 = slot2 = slot3 = symbols[Math.floor(Math.random() * symbols.length)];
+                } else {
+                    slot1 = symbols[Math.floor(Math.random() * symbols.length)];
+                    slot2 = symbols[Math.floor(Math.random() * symbols.length)];
+                    slot3 = symbols[Math.floor(Math.random() * symbols.length)];
+                }
 
                 embed.setDescription(`**Spinning...**\n\n${slot1} | ${slot2} | ${slot3} `);
                 await message.edit({ embeds: [embed] });
@@ -36,9 +43,9 @@ module.exports = {
                 if (spins === 0) {
                     clearInterval(intervalId);
 
-                    const finalSlot1 = symbols[Math.floor(Math.random() * symbols.length)];
-                    const finalSlot2 = symbols[Math.floor(Math.random() * symbols.length)];
-                    const finalSlot3 = symbols[Math.floor(Math.random() * symbols.length)];
+                    const finalSlot1 = slot1;
+                    const finalSlot2 = slot2;
+                    const finalSlot3 = slot3;
 
                     let result = "Womp Womp";
                     if (finalSlot1 === finalSlot2 && finalSlot2 === finalSlot3) {
@@ -53,7 +60,7 @@ module.exports = {
 
                     await message.edit({ embeds: [embed] });
                 }
-            }, 500); 
+            }, 500);
         };
 
         startSpin();
