@@ -131,7 +131,7 @@ client.once('ready', async () => {
     console.log('Good evening, sir. All systems operational and ready for your commands.');
     console.log(client.user.tag + ' is now online!');
     const memberCount = client.guilds.cache.get('1199787498201698344').memberCount;
-    client.user.setActivity('Type "/" for commands! | Members: ${memberCount}', { type: ActivityType.Watching });
+    client.user.setActivity('/help |' + { memberCount }, { type: ActivityType.Watching });
 });
 
 client.on('interactionCreate', async interaction => {
