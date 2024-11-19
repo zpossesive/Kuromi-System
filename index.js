@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
 
-const TOKEN = process.env.TOKEN; 
+const TOKEN = process.env.TOKEN;
 const CLIENT_ID = process.env.CLIENT_ID;
 const client = new Client({
     intents: [
@@ -130,7 +130,8 @@ client.once('ready', async () => {
     console.clear();
     console.log('Good evening, sir. All systems operational and ready for your commands.');
     console.log(client.user.tag + ' is now online!');
-    client.user.setActivity('Type "/" for commands!', { type: ActivityType.Watching });
+    const memberCount = client.guilds.cache.get('1199787498201698344').memberCount;
+    client.user.setActivity('Type "/" for commands! | Members: ${memberCount}', { type: ActivityType.Watching });
 });
 
 client.on('interactionCreate', async interaction => {
