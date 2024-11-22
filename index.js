@@ -1,5 +1,11 @@
 const { Client, GatewayIntentBits, REST, Routes, ActivityType, Collection } = require('discord.js');
 const fs = require('fs');
+
+const { list } = require('./moderation/mangalist');
+const { delete: del } = require('./moderation/mangadelete');
+
+
+
 const path = require('path');
 require('dotenv').config();
 
@@ -135,6 +141,14 @@ client.on('interactionCreate', async interaction => {
     const command = client.commands.get(interaction.commandName);
 
     if (!command) return;
+
+    if (command === 'create') {
+        await create.execute(interaction);
+    } else if (command === 'list') {
+        await list.execute(interaction);
+    } else if (command === 'delete') {
+        await del.execute(interaction);
+    }
 
     try {
         await command.execute(interaction);
