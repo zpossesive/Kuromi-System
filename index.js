@@ -91,6 +91,28 @@ for (const file of gamesfile) {
 }
 
 
+const mangapath = path.join(__dirname, 'reading');
+const mangafile = fs.readdirSync(gamespath).filter(file => file.endsWith('.js'));
+
+
+
+
+for (const file of mangafile) {
+    try {
+        const command = require(path.join(mangapath, file));
+
+        console.log(`Loaded moderation command: ${command.data ? command.data.name : 'Unknown name'} from ${file}`);
+
+        if (command.data && command.data.name) {
+            client.commands.set(command.data.name, command);
+            commands.push(command.data.toJSON());
+        } else {
+            console.error(`Invalid command structure in ${file}: Missing 'data' or 'name'`);
+        }
+    } catch (error) {
+        console.error(`Error loading moderation command ${file}:`, error);
+    }
+}
 
 
 
