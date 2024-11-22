@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { Sequelize, DataTypes } = require('sequelize');
 
 // Verbindung zur MariaDB-Datenbank
-const sequelize = new Sequelize('discord_bot', 'vsiis', 'Marvin2005', {
+const sequelize = new Sequelize('discord_bot', 'vsiismanga', 'zzz', {
     host: 'localhost',
     dialect: 'mariadb',
     logging: false, // Deaktiviert SQL-Logs im Konsolen-Output
