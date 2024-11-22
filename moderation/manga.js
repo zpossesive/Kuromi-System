@@ -1,14 +1,12 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { Sequelize, DataTypes } = require('sequelize');
 
-// Verbindung zur MariaDB-Datenbank
 const sequelize = new Sequelize('discord_bot', 'vsiismanga', 'zzz', {
     host: 'localhost',
     dialect: 'mariadb',
-    logging: false, // Deaktiviert SQL-Logs im Konsolen-Output
+    logging: false,
 });
 
-// Datenbankmodell für Benutzerkapitel
 const UserChapter = sequelize.define('UserChapter', {
     userId: {
         type: DataTypes.STRING,
@@ -28,19 +26,17 @@ const UserChapter = sequelize.define('UserChapter', {
     },
 });
 
-// Verbindung testen und synchronisieren
 (async () => {
     try {
-        await sequelize.authenticate(); // Verbindet sich zur Datenbank
+        await sequelize.authenticate();
         console.log('✅ Connected to MariaDB successfully.');
-        await sequelize.sync(); // Synchronisiert Tabellen mit der Datenbank
+        await sequelize.sync();
         console.log('✅ Database synchronized.');
     } catch (error) {
         console.error('❌ Unable to connect to the database:', error);
     }
 })();
 
-// Discord-Bot-Slash-Command
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('create')
@@ -62,13 +58,12 @@ module.exports = {
         ),
 
     async execute(interaction) {
-        const userId = interaction.user.id; // Discord-Benutzer-ID
+        const userId = interaction.user.id;
         const name = interaction.options.getString('name');
         const link = interaction.options.getString('link');
         const chapter = interaction.options.getString('chapter');
 
         try {
-            // Speichern oder Aktualisieren des Eintrags in der Datenbank
             const [entry, created] = await UserChapter.upsert({
                 userId,
                 name,
