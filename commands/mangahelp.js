@@ -11,8 +11,8 @@ module.exports = {
             .setDescription('Here are the commands you can use:')
             .addFields(
                 { name: '/create', value: 'Creates a manga entry.', inline: true },
-                { name: '/delete', value: 'Deletes a manga entry.', inline: true },
-                { name: '/list', value: 'Lists all your saved manga entries.', inline: true }
+                { name: '/mangadelete', value: 'Deletes a manga entry.', inline: true },
+                { name: '/mangalist', value: 'Lists all your saved manga entries.', inline: true }
 
 
 
