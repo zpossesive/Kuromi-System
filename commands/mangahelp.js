@@ -15,8 +15,6 @@ module.exports = {
                 { name: '/mangalist', value: 'Lists all your saved manga entries.', inline: true }
 
 
-
-
             )
             .setFooter({
                 text: 'Use "/" to access commands.',

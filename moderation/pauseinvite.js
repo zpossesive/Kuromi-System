@@ -1,5 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 
+
+//that is german script dont mind it its a beta feature i want to test it stopts invites in a server (delete this files if u dont need that command if u use it switch the id in index.html)
 let inviteStatusChecked = false;
 let timeout;
 

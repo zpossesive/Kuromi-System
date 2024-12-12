@@ -21,7 +21,6 @@ client.commands = new Collection();
 
 const commands = [];
 
-// Lade alle Commands aus dem 'commands' Ordner
 const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 console.log("Loading commands from:", commandsPath);
@@ -43,7 +42,6 @@ for (const file of commandFiles) {
     }
 }
 
-// Lade alle Moderationsbefehle aus dem 'moderation' Ordner
 const moderationPath = path.join(__dirname, 'moderation');
 const moderationFiles = fs.readdirSync(moderationPath).filter(file => file.endsWith('.js'));
 
@@ -64,7 +62,6 @@ for (const file of moderationFiles) {
 }
 
 
-// Lade alle Spielebefehle aus dem 'games' Ordner
 const gamesPath = path.join(__dirname, 'games');
 const gameFiles = fs.readdirSync(gamesPath).filter(file => file.endsWith('.js'));
 
@@ -85,7 +82,6 @@ for (const file of gameFiles) {
 }
 
 
-// Registriere die Slash-Commands bei Discord
 const rest = new REST({ version: '10' }).setToken(TOKEN);
 
 (async () => {
@@ -101,7 +97,7 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
     }
 })();
 
-// Bot-Start
+
 client.once('ready', async () => {
     const loadingAnimation = ['Loading.', 'Loading..', 'Loading...'];
     for (const frame of loadingAnimation) {
@@ -117,7 +113,6 @@ client.once('ready', async () => {
     client.user.setActivity(`"/help" | ${memberCount} member`, { type: ActivityType.Watching });
 });
 
-// Handle Interaktionen
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
 
