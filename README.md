@@ -11,7 +11,7 @@ This repository contains the code for a Discord bot built using discord.js. The 
 Clone this repository to your local machine:
 ```
 git clone https://github.com/zpossesive/Kuromi-System.git
-cd your-repository-name
+cd repo-name
 ```
 ## 2. Install Dependencies
 Navigate to the project folder and install the required dependencies:
